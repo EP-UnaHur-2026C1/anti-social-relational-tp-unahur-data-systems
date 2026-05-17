@@ -1,5 +1,4 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Usuarios', {
@@ -10,7 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       nickName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true // Requerimiento único explícito del MVP
       },
       createdAt: {
         allowNull: false,

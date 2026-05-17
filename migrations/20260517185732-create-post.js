@@ -1,5 +1,4 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Posts', {
@@ -10,10 +9,23 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       descripcion: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       fechaCreacion: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      usuarioId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Usuarios', // Nombre de la TABLA en la base de datos
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

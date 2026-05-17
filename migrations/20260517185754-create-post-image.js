@@ -1,8 +1,7 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('PostImages', {
+    await queryInterface.createTable('Post_Images', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,7 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       urlImagen: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      postId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Posts',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -23,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('PostImages');
+    await queryInterface.dropTable('Post_Images');
   }
 };

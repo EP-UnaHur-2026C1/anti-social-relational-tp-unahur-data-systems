@@ -1,5 +1,4 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Comentarios', {
@@ -10,10 +9,33 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       texto: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       fecha: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      postId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Posts',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      usuarioId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Usuarios',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
