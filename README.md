@@ -63,6 +63,14 @@ Los sponsors definieron los siguientes nombres y descripciones para las entidade
 
    - Entregar las colecciones necesarias para realizar pruebas (por ejemplo, colecciones de Postman o archivos JSON de ejemplo).
 
+
+# Bonus
+
+1. Hace el upload de las imágenes que se asocian a un POST que lo guarden en una carpeta de imágenes dentro del servidor web.
+2. ¿Cómo modelarías que un usuario pueda "seguir" a otros usuarios, y a su vez ser seguido por muchos? Followers
+3. Como la información de los post no varía muy seguido ¿Qué estrategias podrían utilizar para que la información no sea constantemente consultada desde la base de datos?
+
+
 ###
 
 # Recomendaciones y ayudas
@@ -75,8 +83,30 @@ Por otro lado les dejamos la documentación de los endpoint para que también la
 
 [https://unahur.vmdigitai.com/swagger/](https://unahur.vmdigitai.com/swagger/)
 
-# Bonus
+## Cómo ejecutar el proyecto
 
-1. Hace el upload de las imágenes que se asocian a un POST que lo guarden en una carpeta de imágenes dentro del servidor web.
-2. ¿Cómo modelarías que un usuario pueda "seguir" a otros usuarios, y a su vez ser seguido por muchos? Followers
-3. Como la información de los post no varía muy seguido ¿Qué estrategias podrían utilizar para que la información no sea constantemente consultada desde la base de datos?
+1. Instalar dependencias desde la raíz del repositorio:
+
+```bash
+npm install
+```
+
+2. Arrancar el servidor en modo producción:
+
+```bash
+npm start
+```
+
+3. Arrancar el servidor en modo desarrollo con reinicio automático:
+
+```bash
+npm run dev
+```
+
+4. Una vez iniciado, la documentación Swagger queda disponible en:
+
+```bash
+http://localhost:3000/api-docs
+```
+
+> Si necesitás cambiar el puerto, configurá la variable de entorno `PORT` antes de ejecutar la app.

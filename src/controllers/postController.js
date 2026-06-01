@@ -1,6 +1,7 @@
 'use strict';
 const { Post, PostImage, Usuario, Etiqueta, Comentario } = require('../../models');
 const { Op } = require('sequelize');
+const cache = require('../services/cacheService');
 
 module.exports = {
   // 1. Crear una publicación con imágenes y etiquetas opcionales
@@ -72,6 +73,9 @@ module.exports = {
         ]
       });
 
+      // Invalidar caché de posts cuando se crea uno nuevo
+      cache.del('posts_all');
+
       return res.status(201).json(postCompleto);
     } catch (error) {
       return res.status(500).json({ error: "Error al crear la publicación: " + error.message });
@@ -81,6 +85,13 @@ module.exports = {
   // 2. Obtener todas las publicaciones filtrando comentarios antiguos dinámicamente (.env)
   async getAll(req, res) {
     try {
+      // ESTRATEGIA DE CACHÉ: Verificar si los posts están en caché
+      const cachedPosts = cache.get('posts_all');
+      if (cachedPosts) {
+        // console.log('✅ Posts servidos desde CACHÉ');
+        return res.status(200).json(cachedPosts);
+      }
+
       // Configuración del filtro temporal dinámico mediante variables de entorno
       const mesesLimite = parseInt(process.env.LIMITE_MESES_COMENTARIOS) || 6;
       const fechaLimite = new Date();
@@ -113,6 +124,9 @@ module.exports = {
         ]
       });
 
+      // Almacenar en caché los posts obtenidos de la BD
+      cache.set('posts_all', posts);
+
       return res.status(200).json(posts);
     } catch (error) {
       return res.status(500).json({ error: "Error al obtener publicaciones: " + error.message });
@@ -130,6 +144,10 @@ module.exports = {
       }
 
       await post.destroy();
+      
+      // Invalidar caché de posts cuando se elimina uno
+      cache.del('posts_all');
+
       return res.status(200).json({ message: "Publicación eliminada correctamente." });
     } catch (error) {
       return res.status(500).json({ error: "Error al eliminar la publicación: " + error.message });
