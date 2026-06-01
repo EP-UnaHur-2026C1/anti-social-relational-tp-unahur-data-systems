@@ -1,7 +1,7 @@
 const NodeCache = require('node-cache');
 
 // Crear instancia de caché en memoria con TTL (Time To Live) configurable
-// Por defecto: 10 minutos (600 segundos)
+// Por defecto: 10 minutos (600 segundos) pero se definió en .env a 5 minutos (300 segundos) para pruebas.
 const cacheInstance = new NodeCache({ 
   stdTTL: parseInt(process.env.CACHE_TTL) || 600,
   checkperiod: 120 // Verificar expiración cada 2 minutos
