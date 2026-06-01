@@ -29,7 +29,7 @@ module.exports = {
   // 3. Crear un nuevo usuario (Validando unicidad de nickName)
   async create(req, res) {
     try {
-      const { nickName } = req.body;
+      const { nickName } = req.body || {};
 
       if (!nickName || nickName.trim() === "") {
         return res.status(400).json({ error: "El campo nickName es obligatorio" });
@@ -52,7 +52,7 @@ module.exports = {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { nickName } = req.body;
+      const { nickName } = req.body || {};
 
       if (!nickName || nickName.trim() === "") {
         return res.status(400).json({ error: "El campo nickName no puede estar vacío" });
@@ -104,7 +104,7 @@ module.exports = {
   // 6. Seguir a un usuario
   async seguirUsuario(req, res) {
     try {
-      const { seguidorId, seguidoId } = req.body;
+      const { seguidorId, seguidoId } = req.body || {};
 
       if (parseInt(seguidorId) === parseInt(seguidoId)) {
         return res.status(400).json({ error: "No podés seguirte a vos mismo." });
@@ -129,7 +129,7 @@ module.exports = {
   // 7. Dejar de seguir a un usuario
   async dejarDeSeguirUsuario(req, res) {
     try {
-      const { seguidorId, seguidoId } = req.body;
+      const { seguidorId, seguidoId } = req.body || {};
 
       const seguidor = await Usuario.findByPk(seguidorId);
       const seguido = await Usuario.findByPk(seguidoId);
