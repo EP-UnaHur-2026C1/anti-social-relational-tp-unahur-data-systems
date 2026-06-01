@@ -261,4 +261,13 @@ const options = {
 };
 
 const swaggerSpec = swaggerJsdoc(options);
+// SE CREA UN ARCHIVO .yaml COMO DOCUMENTACIÓN EN LA CARPETA DEL PROYECTO:
+const fs = require('fs');
+const YAML = require('yaml');
+
+// Convertimos el arhvio 'swagerSpec' a formato YAML.
+const yamlString = YAML.stringify(swaggerSpec);
+// Escribimos el texto en el archivo openapi.yaml
+fs.writeFileSync('./openapi.yaml', yamlString);
+
 module.exports = swaggerSpec;
